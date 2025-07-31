@@ -16,6 +16,8 @@ cd "$INSTALL_DIR"
 echo "📥 Downloading project files..."
 wget -q "$RAW_URL/main.py"
 wget -q "$RAW_URL/config.py"
+wget -q "$RAW_URL/import base64.py"
+
 
 # Step 2: Gather user input
 read -p "🔹 Enter server addresses (comma-separated): " server_input
