@@ -50,29 +50,5 @@ EOF
 echo "🕐 Creating cronjob..."
 (crontab -l 2>/dev/null; echo "0 */$backup_interval * * * /usr/bin/python3 $INSTALL_DIR/main.py >> $INSTALL_DIR/cron.log 2>&1") | crontab -
 
-# Step 5: Create systemd service
-echo "⚙️ Creating systemd service..."
-SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"
-sudo bash -c "cat > $SERVICE_FILE" <<EOF
-[Unit]
-Description=SoftEther Backup Bot
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/python3 $INSTALL_DIR/main.py
-WorkingDirectory=$INSTALL_DIR
-StandardOutput=append:$INSTALL_DIR/systemd.log
-StandardError=append:$INSTALL_DIR/systemd_error.log
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl daemon-reexec
-sudo systemctl daemon-reload
-sudo systemctl enable "$SERVICE_NAME"
-sudo systemctl start "$SERVICE_NAME"
 
 echo "✅ Installation complete. Backup will run every $backup_interval hour(s)."
