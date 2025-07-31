@@ -1,3 +1,5 @@
+**English** | [فارسی](README.fa.md)
+
 # SoftEtherBackupBot
 
 A simple Python-based backup tool for [SoftEther VPN](https://www.softether.org/) servers.  
@@ -22,3 +24,20 @@ Run the following command in your terminal:
 
 ```bash
 wget -O se-install https://raw.githubusercontent.com/Pink210/SoftEtherBackupBot/master/install-SoftEtherBackupBot.bash && chmod +x se-install && ./se-install
+```
+
+## Editing Configuration
+To change your server list, password, or Telegram settings, edit the config.py file:
+```bash
+sudo nano $HOME/SoftEtherBackupBot/config.py
+```
+
+## Changing the Backup Interval
+To modify the backup schedule:
+```bash
+crontab -e
+```
+Then update the schedule line. For example, to run the backup every 3 hours:
+```bash
+0 */3 * * * /usr/bin/python3 $HOME/SoftEtherBackupBot/main.py >> $HOME/SoftEtherBackupBot/cron.log 2>&1
+```
